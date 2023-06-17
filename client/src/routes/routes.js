@@ -9,7 +9,7 @@ import { LogOut } from "../components/Logout";
 import ForgotPassword from "../pages/ForgotPassword";
 const routes = [
   <Route
-    path="/login"
+    path="/"
     key={"loginPage"}
     element={
       <ProtectedPage>
