@@ -46,7 +46,7 @@ export default function RegisterNumber() {
       });
     } else {
       await api.post("/users/register", user).then((res) => {
-        nav("/login");
+        nav("/");
       });
     }
   };
@@ -59,7 +59,7 @@ export default function RegisterNumber() {
 
           <Grid h={"45%"} px={"10px"} gap={"10px"}>
             <Box display={"flex"} alignItems={"center"}>
-              <Link to={"/login"}>
+              <Link to={"/"}>
                 <Button variant={"ghost"} fontSize={"25px"} width={"5px"}>
                   <Icon as={HiOutlineArrowNarrowLeft} />
                 </Button>
@@ -148,7 +148,7 @@ export default function RegisterNumber() {
             justifyItems={"center"}
             alignContent={"center"}
           >
-            <Link to={"/login"}>
+            <Link to={"/"}>
               <Button variant={"ghost"} color={"#0064e0"} fontSize={"15px"}>
                 Already have an account?
               </Button>
