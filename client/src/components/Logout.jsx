@@ -23,7 +23,7 @@ export function LogOut() {
 
   const logOut = async () => {
     localStorage.removeItem("user");
-    return nav("/login");
+    return nav("/");
   };
 
   return (
