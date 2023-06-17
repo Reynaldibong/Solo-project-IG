@@ -34,7 +34,7 @@ export function LogOut() {
         justifyContent={"center"}
         h={"300px"}
       >
-        <Link to={"/login"}>
+        <Link to={"/"}>
           <Button
             variant={"link"}
             display={"flex"}
