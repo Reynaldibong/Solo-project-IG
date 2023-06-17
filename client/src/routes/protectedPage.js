@@ -12,7 +12,7 @@ export default function ProtectedPage({ children }) {
     if (token) {
       return nav("/homepage");
     } else {
-      return nav("/login");
+      return nav("/");
     }
   }, [userSelector]);
 
