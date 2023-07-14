@@ -6,18 +6,20 @@ import {
   Image,
   Input,
   Button,
-  useToast,
-  Icon,
 } from "@chakra-ui/react";
-import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import ig from "../assets/instagram.png";
 import fb from "../assets/meta-logo-0.png";
 import back from "../assets/v960-ning-29.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { api } from "../api/api";
 
 export function Login() {
+  const [isLoading, setIsLoading] = useState(false);
+  const nav = useNavigate();
+  const load = () => {
+    nav("/registernumber");
+  };
+
   return (
     <Center>
       <Box w={"414px"} h={"896px"} bgImg={back} py={"15px"}>

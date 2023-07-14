@@ -1,0 +1,97 @@
+tugas solo project selection test 
+
+1. AUTHENTICATION
+ Register
+harus ada email, username, and password, fitur: 
+- input
+- email harus unik, harus benar format ny, rey@gmail.com
+- username harus unik
+- pasword min 8 , harus ada kapital, simbol dan angka min 1
+- pertama kali daftar, user masih status unverified, cara verif harus dikasih link ke mail
+- button register di matiin ketika sedang melakukan request pas register 
+- munculin error (formik) kalau pass lemah, email/ username yg kepake, atau error lain
+- register gk bisa di akses yang sudah login.
+tambahan kalau perlu ( dikasih birthdate setelah register, cth ss di folder ) 
+
+"
+  Login
+ada dua tipe, verif user bisa login spt biasa, yang non verif bsa login tapi gak bisa pakai fitur:
+- bisa input email or username di satu field serta input pw
+- pw bisa di klik invisible nya
+- otomatis ke home kalau login suksses
+- error kalau password salah 
+- button login mati ketika sedang melakukan request 
+tambahan(pas login pertama ada muncul notif, cth di ss)
+
+  verification 
+bikin button untuk kirim email berupa link verif ketika registrasi, fitur: 
+- cth format http:localhost:2000/verif/token
+- setiap user memiliki link yang berbeda
+- users otomatis ke verif status nnya ketika berada di page verif
+- user bisa kirim verif lebih dari 1x, jadi token sebelumnya invalidated.
+- use an email template? 
+
+
+  Reset Password / forgot password
+buat lupa password, harus input email, habiss itu user dapat email berupa link reset, fitur: 
+- cth format http:localhost:2000/reset/token
+- link nya harus beda2 tiap user
+- user bisa change pass (post)
+- password invisibility bisa di atur
+- bisa kirim email reset lebih dari 1x, jadi token sebelumnya invalidated
+
+2. USER PROFILING
+  user info
+buat page agar user bisa edit fullname, bio, username, pp. user bisa klik tombol verif kalau belum status verif di page ini, fitur:
+- dispay user info
+fullnamee, bio, username, email, pp
+
+- edit user info
+fullname, Bio, username(harus unik, kalau sama tampilin error), pp(upload pp, gak boleh link, hauss jpg dll)
+
+- email gak bisa di ubah
+
+- buat button verif, kalau status sudah verif, hide button
+
+3. CONTENT UPLOAD / EDIT
+  create / post content
+user bisa upload (images), konten bisa dilihat oleh user lainnya, fitur
+- conten nya berua gambar, caption, created date, number of like mf	
+- conten nya di post ke db, 
+
+  edit content
+user masih bisa edit ketika konten sudah terpost, fitur:
+- user bisa edit caption
+- user hanya bisa edit post mereka masing2
+
+  delete content
+user bisa hapus konten, fitur:
+- user bisa delete post
+- hanya bisa delete konten sendiri
+
+4. CONTENT INTERACTION
+  fetcching posts
+semua post dari tiap user di buat jadi 1 page dan pagination pakai infinite scroll, fitur:
+- display usernamaee, gambar, created date, nummber of like mf
+- pakai infinite scroll untuk pagination
+- pagination nya di buat di be bukan di fe, jgn paginate pakai local state
+
+  post detail
+buat page untuk menampilkan complete information terdiri dari username, post date, gambar nya, likess, recent comment, fitur: 
+- display username, media/image, created date,number of like, 5 most reccent comment
+- paka url yang berbeda tiap postingan 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

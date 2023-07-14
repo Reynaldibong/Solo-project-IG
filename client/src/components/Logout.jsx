@@ -9,17 +9,15 @@ import {
   useToast,
   Icon,
 } from "@chakra-ui/react";
-import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
-import back from "../assets/v960-ning-29.jpg";
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-
-import { api } from "../api/api";
+import { useState } from "react";
 
 export function LogOut() {
   const nav = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const logOut = async () => {
     localStorage.removeItem("user");
@@ -32,21 +30,26 @@ export function LogOut() {
         display={"grid"}
         alignItems={"center"}
         justifyContent={"center"}
-        h={"300px"}
+        h={"150px"}
       >
-        <Link to={"/"}>
-          <Button
-            variant={"link"}
-            display={"flex"}
-            gap={"10px"}
-            fontSize={"80px"}
-            w={"100%"}
-            onClick={logOut}
-          >
-            <Icon as={BiLogOut} onClick={logOut} />
-            Log Out
-          </Button>
-        </Link>
+        <Button
+          variant={"link"}
+          display={"flex"}
+          gap={"10px"}
+          fontSize={"50px"}
+          w={"100%"}
+          isLoading={isLoading}
+          onClick={() => {
+            setIsLoading(true);
+            setTimeout(() => {
+              setIsLoading(false);
+              logOut();
+            }, 2000);
+          }}
+        >
+          <Icon as={BiLogOut} onClick={logOut} />
+          Log Out
+        </Button>
       </Center>
     </>
   );

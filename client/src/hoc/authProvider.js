@@ -15,12 +15,13 @@ export default function AuthProvider({ children }) {
       const token = JSON.parse(localStorage.getItem("user"));
       console.log(token);
       const user = await api
-        .post("/users/token", {
+        .get("/users/token", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then((res) => res.data);
+        .then((res) => res.data.user);
+
       if (user) {
         dispatch({
           type: "login",

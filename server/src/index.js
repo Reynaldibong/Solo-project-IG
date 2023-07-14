@@ -15,6 +15,12 @@ app.use(express.json());
 app.get("/", (req, res) => res.send("Kaminari no kokyu"));
 
 app.use("/users", routes.userRoutes);
+app.use("/posts", routes.postRoutes);
+app.use("/comment", routes.commentRoutes);
+app.use("/likes", routes.likeRoutes);
+
+app.use("/avatar", express.static(`${__dirname}/public/avatar`));
+app.use("/post", express.static(`${__dirname}/public/post`));
 
 app.listen(PORT, () => {
   console.log(`server is running on PORT: ${PORT}`);

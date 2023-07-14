@@ -4,175 +4,183 @@ import {
   Center,
   Grid,
   Image,
-  Input,
   Button,
-  useToast,
   Icon,
   Avatar,
-  AvatarBadge,
-  AvatarGroup,
   Text,
+  GridItem,
 } from "@chakra-ui/react";
 
-import kafka from "../assets/kafka.jpg";
-
-import { BsChevronDown } from "react-icons/bs";
-import { HiBars3 } from "react-icons/hi2";
-import { CiSquarePlus } from "react-icons/ci";
-import { AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
-import { VscHome } from "react-icons/vsc";
-import { GrSearch } from "react-icons/gr";
-import { TfiVideoClapper } from "react-icons/tfi";
-import { BsMessenger, BsThreeDots } from "react-icons/bs";
-import { BiPlus, BiBookmark } from "react-icons/bi";
-import { IoChatbubbleOutline } from "react-icons/io5";
-import { FiSend } from "react-icons/fi";
-
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { BsGrid3X3 } from "react-icons/bs";
+import { LuContact } from "react-icons/lu";
+import { useEffect, useState } from "react";
 import { api } from "../api/api";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import { useSelector } from "react-redux";
 
-export function UserProfile() {
+export default function UserProfile() {
+  const userSelector = useSelector((state) => state.auth);
+  const [post, setPost] = useState([]);
+
+  console.log(userSelector);
+  useEffect(() => {
+    fetchPost();
+  }, []);
+
+  const fetchPost = async () => {
+    try {
+      const response = await api.get("/posts/" + userSelector.id);
+      // const temporary = response.data.post.sort((a, b) =>
+      //   moment(b.date).diff(a.date)
+      // );
+      const posted = response.data.post.map((post) => ({
+        ...post,
+      }));
+      setPost(posted);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
-    <Center>
-      <Box w={"414px"} h={"896px"} borderX={"2px solid #dbdbdb"}>
-        <Box h={"7%"}>
-          <Flex
-            h={"100%"}
-            justifyContent={"space-between"}
-            px={"2%"}
-            borderBottom={"1px"}
-            borderColor={"#dbdbdb"}
-          >
-            <Flex
-              justifyContent={"center"}
-              alignItems={"center"}
-              gap={"5px"}
-              fontWeight={"bold"}
-            >
-              Kafka
-              <Icon as={BsChevronDown} />
-            </Flex>
-
-            <Flex
-              w={"20%"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              gap={"20px"}
-              fontSize={"30px"}
-            >
-              <Icon
-                as={BiPlus}
-                border={"2px"}
-                borderRadius={"7px"}
-                boxSize={"25px"}
-              />
-              <Box display={"flex"} boxSize={"35px"}>
-                <Link to={"/logout"}>
-                  <Icon as={HiBars3} fontSize={"25px"} boxSize={"35px"} />
-                </Link>
-              </Box>
-            </Flex>
-          </Flex>
-        </Box>
-
-        <Box h={"28%"}>
-          <Flex h={"40%"} px={"10px"}>
-            <Center w={"20%"}>
-              <Box textAlign={"center"} gap={"5px"} display={"grid"}>
-                <Avatar src={kafka} boxSize={"80px"} />
-              </Box>
-            </Center>
-
-            <Box
-              w={"80%"}
-              display={"flex"}
-              alignItems={"center"}
-              textAlign={"center"}
-            >
-              <Center
-                w={"100%"}
-                gap={"40px"}
-                fontWeight={"bold"}
-                fontSize={"15px"}
-              >
-                <Box>
-                  10
-                  <Text> Posts</Text>
-                </Box>
-                <Box>
-                  300
-                  <Text> Followers</Text>
-                </Box>{" "}
-                <Box>
-                  267
-                  <Text> Following</Text>
+    <>
+      <Center>
+        <Box
+          w={"414px"}
+          // h={"896px"}
+          h={post.length <= 6 ? "100vh" : null}
+          borderX={"2px solid #dbdbdb"}
+          pt={"65px"}
+          pb={"45px"}
+          zIndex={0}
+        >
+          {/* main */}
+          <Box>
+            <Flex px={"10px"}>
+              <Center w={"20%"}>
+                <Box textAlign={"center"} gap={"5px"} display={"grid"}>
+                  <Avatar
+                    src={userSelector.avatar_url}
+                    boxSize={"80px"}
+                    border={"1px solid #dbdbdb"}
+                  />
                 </Box>
               </Center>
-            </Box>
-          </Flex>
 
-          <Grid h={"20%"} px={"15px"}>
-            <Text fontWeight={"medium"}>Kafka</Text>
-
-            <Flex fontWeight={"bold"}>Submission : Stellaron Hunter</Flex>
-          </Grid>
-
-          <Flex h={"40%"} justifyContent={"center"}>
-            <Flex
-              gap={"10px"}
-              w={"100%"}
-              // justifyContent={"center"}
-              // alignItems={"center"}
-              pt={"2%"}
-              px={"10px"}
-            >
-              <Button w={"50%"}>Edit Profile</Button>
-              <Button w={"50%"}>Share Profile</Button>
+              <Box
+                w={"80%"}
+                display={"flex"}
+                alignItems={"center"}
+                textAlign={"center"}
+              >
+                <Center
+                  w={"100%"}
+                  gap={"35px"}
+                  fontWeight={"bold"}
+                  fontSize={"15px"}
+                >
+                  <Box>
+                    {post.length}
+                    <Text> Posts</Text>
+                  </Box>
+                  <Box>
+                    300
+                    <Text> Followers</Text>
+                  </Box>{" "}
+                  <Box>
+                    267
+                    <Text> Following</Text>
+                  </Box>
+                </Center>
+              </Box>
             </Flex>
-          </Flex>
-        </Box>
 
-        <Box h={"10%"}>
-          <Button>
-            <Icon as={AiOutlinePlus} />
-          </Button>
-        </Box>
+            <Grid px={"15px"} py={"5px"} fontSize={"15px"}>
+              <Text fontWeight={"medium"}>{userSelector.fullname}</Text>
 
-        <Box h={"50%"}></Box>
+              <Flex fontWeight={"bold"}>{userSelector.bio}</Flex>
+            </Grid>
 
-        <Flex
-          h={"5%"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          borderTop={"1px solid #dbdbdb"}
-        >
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            gap={"40px"}
-          >
-            <Link to="/homepage">
-              <Button variant={"link"} fontSize={"32px"} color={"black"}>
-                <Icon as={VscHome} />
-              </Button>
-            </Link>
-            <Button variant={"link"} fontSize={"25px"} color={"black"}>
-              <Icon as={GrSearch} />
-            </Button>{" "}
-            <Button variant={"link"} fontSize={"30px"} color={"black"}>
-              <Icon as={CiSquarePlus} />
-            </Button>{" "}
-            <Button variant={"link"} fontSize={"25px"} color={"black"}>
-              <Icon as={TfiVideoClapper} />
-            </Button>{" "}
-            <Button variant={"link"} fontSize={"30px"} color={"black"}>
-              <Avatar name="" size={"sm"} />
-            </Button>
+            <Flex justifyContent={"center"} h={"60px"}>
+              <Flex
+                gap={"10px"}
+                w={"100%"}
+                px={"10px"}
+                h={"100%"}
+                alignItems={"center"}
+              >
+                <Box w={"50%"}>
+                  <Link to={"/editprofile"}>
+                    <Button w={"100%"}> Edit Profile</Button>
+                  </Link>
+                </Box>
+                <Button w={"50%"}>Share Profile</Button>
+              </Flex>
+            </Flex>
           </Box>
-        </Flex>
-      </Box>
-    </Center>
+
+          <Box display={"flex"} flexDirection={"column"}>
+            <Box textAlign={"center"} px={"20px"} p={"10px 0px 20px 20px"}>
+              <Box
+                borderRadius={"50px"}
+                border={"1px"}
+                boxSize={"62px"}
+                fontSize={"13px"}
+                display={"grid"}
+                gap={"5px"}
+                fontWeight={"bold"}
+              >
+                <Button
+                  variant={"unstyled"}
+                  boxSize={"58px"}
+                  fontSize={"30px"}
+                  display={"flex"}
+                >
+                  +
+                </Button>
+                New
+              </Box>
+            </Box>
+
+            <Box display={"flex"} fontSize={"25px"} h={"40px"}>
+              <Flex w={"100%"}>
+                <Center w={"50%"} borderBottom={"1px"}>
+                  <Flex as={BsGrid3X3}></Flex>
+                </Center>
+                <Center w={"50%"}>
+                  <Flex as={LuContact} fontSize={"30px"}></Flex>
+                </Center>
+              </Flex>
+            </Box>
+          </Box>
+
+          {/* content */}
+          <Box overflowY={"hidden"} pt={"5px"}>
+            <Grid
+              templateColumns="repeat(3, 1fr)"
+              gap={1}
+              alignItems={"center"}
+            >
+              {post?.map((val, idx) => {
+                return (
+                  <>
+                    <Link to={`/postbyu/${val.id}`}>
+                      <GridItem
+                        maxH={"135px"}
+                        maxW={"148px"}
+                        overflow={"hidden"}
+                        // px={"2px"}
+                      >
+                        <Image key={idx} src={val.image} />
+                      </GridItem>
+                    </Link>
+                  </>
+                );
+              })}
+            </Grid>
+          </Box>
+        </Box>
+      </Center>
+    </>
   );
 }

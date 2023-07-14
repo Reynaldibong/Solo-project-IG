@@ -1,27 +1,17 @@
-import { useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { UserProfile } from "../components/Profile";
+import UserProfile from "../components/Profile";
+import VerifClick from "../components/VerifClick";
+import Footer from "../components/footer";
+import Navbar2 from "../components/navbar2";
+import { useSelector } from "react-redux";
+
 export default function Profile() {
-  const nav = useNavigate();
-  const dispatch = useDispatch();
-  const toast = useToast();
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
-  const inputHandler = (e) => {
-    const { id, value } = e.target;
-    const tempUser = { ...user };
-    tempUser[id] = value;
-    setUser(tempUser);
-  };
-
+  const userSelector = useSelector((state) => state.auth);
   return (
     <>
+      {userSelector.status == "unverified" ? <VerifClick /> : null}
+      <Navbar2 />
       <UserProfile />
+      <Footer />
     </>
   );
 }

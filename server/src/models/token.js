@@ -1,25 +1,21 @@
 module.exports = (sequelize, Sequelize) => {
-  const Token = sequelize.define(
-    "tokens",
-    {
-      token: {
-        type: Sequelize.STRING,
-      },
-      expired: {
-        type: Sequelize.DATE,
-      },
-      payload: {
-        type: Sequelize.STRING,
-      },
-      valid: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: true,
-      },
-      status: {
-        type: Sequelize.ENUM("LOGIN", "FORGOT-PASSWORD"),
-      },
+  const Token = sequelize.define("tokens", {
+    token: {
+      type: Sequelize.STRING,
     },
-    { paranoid: true }
-  );
+    expired: {
+      type: Sequelize.DATE,
+    },
+    payload: {
+      type: Sequelize.STRING,
+    },
+    valid: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true,
+    },
+    status: {
+      type: Sequelize.ENUM("LOGIN", "FORGOT-PASSWORD", "VERIFY"),
+    },
+  });
   return Token;
 };
